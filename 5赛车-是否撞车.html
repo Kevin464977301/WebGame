@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Game</title>
+  <style type="text/css">
+	*{
+		margin:0;
+		padding:0;
+	} 
+	.road{
+		/*绝对定位来实现居中*/
+		position:absolute;
+		top:0;
+		left:25%; /*距离左边25%的宽度*/
+		/*定位居中*/
+		/* margin:0 auto;
+			/*默认是相对定位,这里是让子元素根据当前元素进行定位*/
+		/* position:relative;
+		*/
+		/*设置超出盒子以外的内容不显示*/
+		overflow:hidden;
+		/*设置盒子的宽度和高度*/
+		width:50%;
+		height:100vh;
+		/*设置背景颜色*/
+		background-color:#808080;
+		/*左右两边的边款*/
+		border-left:3px solid blue;
+		border-right:3px solid blue;
+		display:-webkit-box;
+	}
+	.blank {
+		-webkit-box-flex:1;
+		height:300%;
+		margin-top:-100%;
+		border-right: 4px dashed white;
+	}
+	.blank1{
+		/*让右边边线为0*/
+		border-right:0;
+	}
+	/*定义己方车的样式*/
+	.car{
+		/*设置绝对定位*/
+		position:absolute;
+		left:0;
+		bottom:0;
+		/*设置汽车的宽度和高度,相对于整个屏幕,让车显示在跑道*/
+		width:20%;
+		height:40%;
+		background:url(img/car.png);
+		/*设置汽车的宽高与外层盒子的宽高一致*/
+		background-size:100% 100%;
+	}
+	/*定义子弹的样式*/
+	.bullet{
+		position:absolute;
+		left:0;
+		bottom:0;
+		width:20%;
+		height:10%;
+		background-color:red;
+		border-radius:50%;
+		box-sizing:border-box;
+	}
+	/*定义障碍物的样式*/
+	.othercar{
+		position:absolute;
+		width:20%;
+		height:20%;
+		background-color: yellow;
+		/*边款: 2像素 实现 蓝色*/
+		border: 2px solid blue;
+		/*将边角设置成20%的圆角*/
+		border-radius:20%;
+		/*box-shadow阴影*/
+		/*x的偏移,y的偏移,阴影的虚化程度,阴影的大小,阴影颜色*/
+		box-shadow: 1px 3px 5px 5px black;
+		box-sizing: border-box;
+		left:0;
+		top:1px;
+	}
+  </style>
+ </head>
+ <body>
+	<div class = "road">
+		<div class = "car"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank blank1"></div>
+	</div>
+  <script src="js/jquery-1.12.3.min.js"></script>
+  <script>
+
+  function run()
+  {
+		$(".blank").animate({"margin-top":"0"},1000,function()
+		{
+			$(".blank").css({"margin-top":"-100%"});
+			run();
+		});
+  }
+  run();
+
+  //定好位置
+  var x = 0;
+  var y = 0;
+  //当你按下方向键的时候,使用这个功能
+  document.onkeydown = function showkey()
+  {
+		key = event.keyCode;
+		//console.log(event.keyCode);
+		if(key == 37 || key == 65)
+		{
+			//A键 keyCode=65
+			// alert("左");
+			//console.log("左");
+			x = x - 20;
+		}
+		if(key == 38 || key == 87)
+		{
+			//W键 keyCode=87
+			//console.log("上");
+			y = y + 2;
+		}
+		if(key == 39 || key == 68)
+		{
+			//D键 keyCode=68
+			//console.log("右");
+			x = x + 20;
+		}
+		if(key == 40 || key == 83)
+		{
+			//S键 keyCode=83
+			//console.log("下");
+			y = y -2;
+		}
+		if(x < 0)
+		{
+			x = 0;
+		}
+		if(x > 80)
+		{
+			x= 80;
+		}
+		if(y < 0)
+		{
+			y = 0;
+		}
+		if(y > 60)
+		{
+			y = 60;
+		}
+		$(".car").css({"left": x + "%"});
+		$(".car").css({"bottom": y + "%"});
+  }
+
+  //定义功能createCar,作用是创建1辆车子
+  function createCar()
+  {
+	  //如何产生障碍物
+	  //1.创建一个空间用来放盒子
+	  var cars = document.createElement("div");
+	  //2.设置样式与othercar一样
+	  cars.className = "othercar";
+	  //3.调整障碍物的位置
+	  var x1 = 20 * parseInt(5 * Math.random());
+	  //cars.style.left代表与左边的距离
+	  cars.style.left = x1 + "%";
+	  //4.将障碍物放到路上
+	  $(".road").append(cars);
+
+	  //创建定时器每隔一段时间获取障碍物的位置
+	  var tim = setInterval(function()
+	  {
+			var xx = parseInt($(cars).position().left);
+			var yy = parseInt($(cars).position().top);
+			//console.log(xx);
+			//console.log(yy);
+			var myCarx = parseInt($(".car").position().left);
+			var myCary = parseInt($(".car").position().top);
+			//console.log(myCarx);
+			//console.log(myCary);
+			if (myCarx == xx)
+			{
+				var he = parseInt($(cars).height());
+				if (yy + he >= myCary && yy < myCary)
+				{
+					alert("游戏结束!");
+				}
+			}
+			if (yy == 0)
+			{
+				clearInterval(tim);
+			}
+	  },10);
+
+	  //设置障碍物与顶部的距离
+	  $(cars).animate({"top":"100%"},2000,function()
+	  {
+			//下落完成后,删除该障碍物(元素),remove用于删除
+			$(cars).remove();
+	  });
+  }
+
+  //定义发射子弹功能emit
+  function emit()
+  {
+		var emits = document.createElement("div");
+		emits.className = "bullet";
+		emits.style.left = "40%";
+		emits.style.top = "-10%";
+		$(".car").append(emits);
+		$(emits).animate({"top":"-150%"},1000,function()
+		{
+			$(emits).remove();
+		});
+  }
+  setInterval(emit,400);
+  setInterval(emit,450);
+  setInterval(emit,500);
+  //创建定时器,每隔一段时间增加一个障碍物
+  setInterval(createCar,1000);
+  </script>
+ </body>
+</html>

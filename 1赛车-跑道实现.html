@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Game</title>
+  <style>
+	*{
+		margin:0;
+		padding:0;
+	} 
+	.road{
+		/*绝对定位来实现居中
+		position:absolute;
+		top:0;
+		left:25%;
+		*/
+		/*设置超出盒子以外的内容不显示*/
+		overflow:hidden;
+		width:50%;
+		height:100vh;
+		background-color:#808080;
+		margin:0 auto;
+		/*左右两边的边款*/
+		border-left:2px solid blue;
+		border-right:2px solid blue;
+		display:-webkit-box;
+	}
+	.blank {
+		-webkit-box-flex:1;
+		height:200%;
+		margin-top:-100%;
+		border-right: 3px dashed white;
+	}
+	.blank1{
+		border-right:0;
+	}
+	.canvas{
+		width:90%;
+		height:160px;
+		background-color:red;
+		margin:auto;
+	}
+  </style>
+ </head>
+ <body>
+	<div class = "road">
+		<div class = "blank"><div class="canvas"></div></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank blank1"></div>
+	</div>
+  <script src="js/jquery-1.12.3.min.js"></script>
+  <script>
+  function run(){
+
+	$(".blank").animate({"margin-top":"0"},1000);
+  }
+	run();
+  </script>
+ </body>
+</html>

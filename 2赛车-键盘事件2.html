@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Game</title>
+  <style type="text/css">
+	*{
+		margin:0;
+		padding:0;
+	} 
+	.road{
+		/*绝对定位来实现居中*/
+		position:absolute;
+		top:0;
+		left:25%; /*距离左边25%的宽度*/
+		/*定位居中*/
+		/* margin:0 auto;
+			/*默认是相对定位,这里是让子元素根据当前元素进行定位*/
+		/* position:relative;
+		*/
+		/*设置超出盒子以外的内容不显示*/
+		overflow:hidden;
+		/*设置盒子的宽度和高度*/
+		width:50%;
+		height:100vh;
+		/*设置背景颜色*/
+		background-color:#808080;
+		/*左右两边的边款*/
+		border-left:3px solid blue;
+		border-right:3px solid blue;
+		display:-webkit-box;
+	}
+	.blank {
+		-webkit-box-flex:1;
+		height:300%;
+		margin-top:-100%;
+		border-right: 4px dashed white;
+	}
+	.blank1{
+		/*让右边边线为0*/
+		border-right:0;
+	}
+	.car{
+		/*设置绝对定位*/
+		position:absolute;
+		left:0;
+		bottom:0;
+		/*设置汽车的宽度和高度,相对于整个屏幕,让车显示在跑道*/
+		width:20%;
+		height:40%;
+		background:url(img/car.png);
+		/*设置汽车的宽高与外层盒子的宽高一致*/
+		background-size:100% 100%;
+	}
+	.othercar{
+		position:absolute;
+		width:100px;
+		height:200px;
+		background-color: blue;
+		left:10px;
+		top:20px;
+	}
+  </style>
+ </head>
+ <body>
+	<div class = "road">
+		<div class = "car"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank blank1"></div>
+		<div class = "othercar"></div>
+	</div>
+  <script src="js/jquery-1.12.3.min.js"></script>
+  <script>
+  function run()
+  {
+	$(".blank").animate({"margin-top":"0"},1000,function()
+	{
+		$(".blank").css({"margin-top":"-100%"});
+		run();
+	});
+  }
+  run();
+  //定好位置
+  var x = 0;
+  var y = 0;
+  //当你按下方向键的时候,使用这个功能
+  document.onkeydown = function showkey(){
+	key = event.keyCode;
+	console.log(event.keyCode);
+	if(key == 37 || key == 65){
+		//A键 keyCode=65
+		// alert("左");
+		console.log("左");
+		x = x - 2;
+	}
+	if(key == 38 || key == 87){
+		//W键 keyCode=87
+		console.log("上");
+		y = y + 2;
+	}
+	if(key == 39 || key == 68){
+		//D键 keyCode=68
+		console.log("右");
+		x = x + 2;
+		console.log(x);
+	}
+	if(key == 40 || key == 83){
+		//S键 keyCode=83
+		console.log("下");
+		y = y -2;
+	}
+	if(x < 0){
+		x = 0;
+	}
+	if(x > 80){
+		x= 80;
+	}
+	if(y < 0){
+		y = 0;
+	}
+	if(y > 60){
+		y = 60;
+	}
+	$(".car").css({"left": x + "%"});
+	$(".car").css({"bottom": y + "%"});
+  }
+  </script>
+ </body>
+</html>

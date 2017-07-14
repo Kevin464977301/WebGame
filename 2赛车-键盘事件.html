@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Game</title>
+  <style type="text/css">
+	*{
+		margin:0;
+		padding:0;
+	} 
+	.road{
+		/*绝对定位来实现居中*/
+		position:absolute;
+		top:0;
+		left:25%; /*距离左边25%的宽度*/
+		/*定位居中*/
+		/* margin:0 auto;
+			/*默认是相对定位,这里是让子元素根据当前元素进行定位*/
+		/* position:relative;
+		*/
+		/*设置超出盒子以外的内容不显示*/
+		overflow:hidden;
+		/*设置盒子的宽度和高度*/
+		width:50%;
+		height:100vh;
+		/*设置背景颜色*/
+		background-color:#808080;
+		/*左右两边的边款*/
+		border-left:3px solid blue;
+		border-right:3px solid blue;
+		display:-webkit-box;
+	}
+	.blank {
+		-webkit-box-flex:1;
+		height:300%;
+		margin-top:-100%;
+		border-right: 4px dashed white;
+	}
+	.blank1{
+		/*让右边边线为0*/
+		border-right:0;
+	}
+	.car{
+		/*设置绝对定位*/
+		position:absolute;
+		left:0;
+		top:50%;
+		/*设置汽车的宽度和高度,相对于整个屏幕,让车显示在跑道*/
+		width:20%;
+		height:40%;
+		background:url(img/car.png);
+		/*设置汽车的宽高与外层盒子的宽高一致*/
+		background-size:100% 100%;
+	}
+	  html,body{
+		  overflow:hidden;
+	  }
+  </style>
+ </head>
+ <body>
+	<div class = "road">
+		<div class = "car"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank"></div>
+		<div class = "blank blank1"></div>
+	</div>
+  <script src="js/jquery-1.12.3.min.js"></script>
+  <script>
+  function run()
+  {
+	$(".blank").animate({"margin-top":"0"},1000,function()
+	{
+		$(".blank").css({"margin-top":"-100%"});
+		run();
+	});
+  }
+  run();
+  function showkey(){
+	key = event.keyCode;
+	if(key == 37){
+		alert("左");
+	}
+	if(key == 38){
+		alert("上");
+	}
+	if(key == 39){
+		alert("右");
+	}
+	if(key == 40){
+		alert("下");
+	}
+  }
+  document.onkeydown = showkey;
+  </script>
+ </body>
+</html>
