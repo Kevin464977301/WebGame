@@ -11,6 +11,7 @@
 	*{
 		margin:0;
 		padding:0;
+		overflow:hidden;
 	} 
 	.road{
 		/*绝对定位来实现居中*/
@@ -88,6 +89,60 @@
 		left:0;
 		top:1px;
 	}
+	.back1{
+			position:absolute;
+			width:50%;
+			height:100vh;
+			left:0;
+			/*设置透明度为30%*/
+			opacity: 0.3;
+			background-color: pink;
+	}
+	.back2{
+			position:absolute;
+			width:50%;
+			height:100vh;
+			left:50%;
+			opacity: 0.3;
+			background-color: pink;
+	}
+	.btn1{
+		position:absolute;
+		width:10%;
+		height:5%;
+		top:30%;
+		left:45%;
+		/*设置字体*/
+		font-family: "华文新魏";
+		/*设置字体大小*/
+		font-size: 30px;
+		/*设置字体颜色*/
+		color: white;
+		/*设置button背景颜色*/
+		background-color: blue;
+	}
+	.btn2{
+		position:absolute;
+		width:10%;
+		height:5%;
+		top:40%;
+		left:45%;
+		font-family: "华文新魏";
+		font-size: 30px;
+		color: white;
+		background-color: blue;
+	}
+	.btn3{
+		position:absolute;
+		width:10%;
+		height:5%;
+		top:50%;
+		left:45%;
+		font-family: "华文新魏";
+		font-size: 30px;
+		color: white;
+		background-color: blue;
+	}
   </style>
  </head>
  <body>
@@ -99,9 +154,16 @@
 		<div class = "blank"></div>
 		<div class = "blank blank1"></div>
 	</div>
+	<div class = "back1"></div>
+	<div class = "back2"></div>
+	<button class = "btn1" onclick = "start(1)">难度一</button>
+	<button class = "btn2" onclick = "start(2)">难度二</button>
+	<button class = "btn3" onclick = "start(3)">难度三</button>
   <script src="js/jquery-1.12.3.min.js"></script>
   <script>
 
+  //定义空间
+  var num;
   function run()
   {
 		$(".blank").animate({"margin-top":"0"},1000,function()
@@ -197,8 +259,6 @@
 				if (yy + he >= myCary && yy < myCary)
 				{
 					alert("游戏结束!");
-					//游戏结束重新加载页面
-					//window.location.reload();
 				}
 			}
 			if (yy == 0)
@@ -233,6 +293,31 @@
   setInterval(emit,500);
   */
   //创建定时器,每隔一段时间增加一个障碍物
+  //setInterval(createCar,1000);
+
+  //定义一个功能拉开序幕,然后开始生成障碍物
+  function apartStart(num)
+  {
+		if (num == 1)
+		{
+			clearInterval(tim);
+		}
+		else if (num == 2)
+		{
+			clearInterval(tim);
+		}
+		else if (num == 3)
+		{
+			clearInterval(tim);
+		}
+		$(".back1").animate({"margin-left":"-50%"},1000,function(){apart();});
+		$(".back2").animate({"margin-left":"50%"},1000,function(){apart();});
+
+		$(".btn1").animate({"margin-left":"-45%"},1000,function(){apart();});
+		$(".btn2").animate({"margin-left":"-45%"},1000,function(){apart();});
+		$(".btn3").animate({"margin-left":"-45%"},1000,function(){apart();});
+  }
+  //apart();
   setInterval(createCar,1000);
   </script>
  </body>
